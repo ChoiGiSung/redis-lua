@@ -101,6 +101,7 @@ services:
       - "5540:5540"
     networks:
       - redisnet
+# redis://default@redis-node-1:6379
 
 networks:
   redisnet:
