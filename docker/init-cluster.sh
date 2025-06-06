@@ -2,7 +2,6 @@
 
 echo "Waiting for Redis nodes to start..."
 sleep 5
-
 echo "Creating cluster..."
 yes yes | redis-cli --cluster create \
   redis-node-1:6379 \
