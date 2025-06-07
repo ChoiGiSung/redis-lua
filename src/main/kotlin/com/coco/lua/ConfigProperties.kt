@@ -14,6 +14,7 @@ class ConfigProperties {
     class RedisProperties {
         var maxRedirects: Int = 0
         lateinit var connectIp: String
+        lateinit var password: String
         lateinit var nodes: List<String>
     }
 

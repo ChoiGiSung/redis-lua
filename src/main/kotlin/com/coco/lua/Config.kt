@@ -27,7 +27,7 @@ class Config(
     fun redisConnectionFactory(): RedisConnectionFactory {
         val redisClusterConfiguration = RedisClusterConfiguration(configProperties.redisProperties().nodes)
         redisClusterConfiguration.setMaxRedirects(configProperties.redisProperties().maxRedirects)
-        redisClusterConfiguration.setPassword("bitnami")
+        redisClusterConfiguration.setPassword(configProperties.redisProperties().password)
 
         val clusterTopologyRefreshOptions: ClusterTopologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
             .enableAllAdaptiveRefreshTriggers()
