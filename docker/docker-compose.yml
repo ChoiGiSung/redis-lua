@@ -7,6 +7,8 @@ services:
     volumes:
       - redis-cluster_data-0:/bitnami/redis/data
     environment:
+      - 'REDIS_CLUSTER_ANNOUNCE_IP=127.0.0.1'
+      - 'REDIS_CLUSTER_ANNOUNCE_PORT=7000'
       - 'REDIS_PASSWORD=bitnami'
       - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
     ports:
@@ -16,6 +18,8 @@ services:
     volumes:
       - redis-cluster_data-1:/bitnami/redis/data
     environment:
+      - 'REDIS_CLUSTER_ANNOUNCE_IP=127.0.0.1'
+      - 'REDIS_CLUSTER_ANNOUNCE_PORT=7001'
       - 'REDIS_PASSWORD=bitnami'
       - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
     ports:
@@ -25,6 +29,8 @@ services:
     volumes:
       - redis-cluster_data-2:/bitnami/redis/data
     environment:
+      - 'REDIS_CLUSTER_ANNOUNCE_IP=127.0.0.1'
+      - 'REDIS_CLUSTER_ANNOUNCE_PORT=7002'
       - 'REDIS_PASSWORD=bitnami'
       - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
     ports:
@@ -34,6 +40,8 @@ services:
     volumes:
       - redis-cluster_data-3:/bitnami/redis/data
     environment:
+      - 'REDIS_CLUSTER_ANNOUNCE_IP=127.0.0.1'
+      - 'REDIS_CLUSTER_ANNOUNCE_PORT=7003'
       - 'REDIS_PASSWORD=bitnami'
       - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
     ports:
@@ -43,6 +51,8 @@ services:
     volumes:
       - redis-cluster_data-4:/bitnami/redis/data
     environment:
+      - 'REDIS_CLUSTER_ANNOUNCE_IP=127.0.0.1'
+      - 'REDIS_CLUSTER_ANNOUNCE_PORT=7004'
       - 'REDIS_PASSWORD=bitnami'
       - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
     ports:
