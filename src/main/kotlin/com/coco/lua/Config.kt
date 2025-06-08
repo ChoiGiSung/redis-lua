@@ -2,6 +2,7 @@ package com.coco.lua
 
 import io.lettuce.core.ClientOptions
 import io.lettuce.core.ReadFrom
+import io.lettuce.core.SocketOptions
 import io.lettuce.core.cluster.ClusterClientOptions
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions
 import io.lettuce.core.internal.HostAndPort
@@ -28,7 +29,6 @@ class Config(
         val redisClusterConfiguration = RedisClusterConfiguration(configProperties.redisProperties().nodes)
         redisClusterConfiguration.setMaxRedirects(configProperties.redisProperties().maxRedirects)
         redisClusterConfiguration.setPassword(configProperties.redisProperties().password)
-
         val clusterTopologyRefreshOptions: ClusterTopologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
             .enableAllAdaptiveRefreshTriggers()
             .enablePeriodicRefresh(Duration.ofHours(1L))
@@ -37,6 +37,7 @@ class Config(
             .topologyRefreshOptions(clusterTopologyRefreshOptions)
             .build()
 
+        //todo hostAndPort.getPort()가 6379로 나와서 연결 X
         val resolver = MappingSocketAddressResolver.create(
             DnsResolvers.UNRESOLVED
         ) { hostAndPort: HostAndPort ->
