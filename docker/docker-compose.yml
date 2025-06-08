@@ -87,3 +87,5 @@ volumes:
     driver: local
   redis-cluster_data-5:
     driver: local
+
+# redis://default@redis-node-4:6379
