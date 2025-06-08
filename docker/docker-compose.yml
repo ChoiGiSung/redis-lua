@@ -64,7 +64,7 @@ services:
     container_name: redis-commander
     restart: always
     environment:
-      - 'REDIS_HOSTS=my_redis_cluster:redis-node-5:6379:bitnami:0:cluster'
+      - REDIS_HOSTS=node1:redis-node-5:6379
     ports:
       - "8889:8081"
 
