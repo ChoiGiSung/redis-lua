@@ -93,5 +93,3 @@ volumes:
   redis-cluster_data-5:
     driver: local
 
-# redis://default@redis-node-4:6379
-# winpty docker exec -it $(docker ps -f name=redis-node-3 -q) redis-cli -a bitnami INFO replication

@@ -1,0 +1,5 @@
+# redis://default@redis-node-4:6379
+# winpty docker exec -it $(docker ps -f name=redis-node-3 -q) redis-cli -a bitnami INFO replication
+curl http://localhost:8080/1
+curl -X POST http://localhost:8080/   -H "Content-Type: application/json"   -d '{"key":"1", "value":"14"}'
+curl -X POST http://localhost:8080/decrease   -H "Content-Type: application/json"   -d '{"key":"1", "value":"14"}'
