@@ -28,6 +28,14 @@ class ApiController(
         return "success"
     }
 
+    @PostMapping("/decrease")
+    fun setToRedis2(
+        @RequestBody body: Body
+    ): String {
+        redisService.decrease(body.key, 1)
+        return "success"
+    }
+
     class Body(
         val key: String,
         val value: String
