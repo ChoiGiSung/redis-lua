@@ -1,5 +1,50 @@
-# redis://default@redis-node-4:6379
-# winpty docker exec -it $(docker ps -f name=redis-node-3 -q) redis-cli -a bitnami INFO replication
+# redis-insight 연결 시 사용
+redis://default@redis-master-1:9001
+
+# API
 curl http://localhost:8080/1
 curl -X POST http://localhost:8080/   -H "Content-Type: application/json"   -d '{"key":"1", "value":"14"}'
 curl -X POST http://localhost:8080/decrease   -H "Content-Type: application/json"   -d '{"key":"1", "value":"14"}'
+
+
+# https://zks145.tistory.com/149
+
+# 마스터 노드 ip 확인
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-master-1
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-master-2
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-master-3
+
+# 클러스터 생성
+winpty docker exec -it redis-master-1 redis-cli --cluster create \
+172.18.0.8:9001 \
+172.18.0.6:9002 \
+172.18.0.2:9003 \
+--cluster-replicas 0
+
+# 슬래이브 노드 ip 확인
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-slave-1
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-slave-2
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-slave-3
+
+# 마스터-슬래이브 연결
+winpty docker exec -it redis-master-1 redis-cli -p 9001 cluster info
+winpty docker exec -it redis-slave-1 redis-cli --cluster add-node 172.18.0.4:9004 172.18.0.8:9001 --cluster-slave
+winpty docker exec -it redis-slave-2 redis-cli --cluster add-node 172.18.0.5:9005 172.18.0.6:9002 --cluster-slave
+winpty docker exec -it redis-slave-3 redis-cli --cluster add-node 172.18.0.7:9006 172.18.0.2:9003 --cluster-slave
+
+# 연동 확인
+winpty docker exec -it $(docker ps -f name=redis-slave-1 -q) redis-cli -a INFO replication
+
+# 모니터링
+winpty docker exec -it redis-master-1 redis-cli -p 9001
+monitor
+winpty docker exec -it redis-master-2 redis-cli -p 9002
+monitor
+winpty docker exec -it redis-master-3 redis-cli -p 9003
+monitor
+winpty docker exec -it redis-slave-1 redis-cli -p 9004
+monitor
+winpty docker exec -it redis-slave-2 redis-cli -p 9005
+monitor
+winpty docker exec -it redis-slave-3 redis-cli -p 9006
+monitor

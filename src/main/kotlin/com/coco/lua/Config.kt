@@ -5,6 +5,7 @@ import io.lettuce.core.ReadFrom
 import io.lettuce.core.SocketOptions
 import io.lettuce.core.cluster.ClusterClientOptions
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions
+import io.lettuce.core.cluster.RedisClusterClient
 import io.lettuce.core.internal.HostAndPort
 import io.lettuce.core.resource.ClientResources
 import io.lettuce.core.resource.DnsResolvers
@@ -21,14 +22,13 @@ import java.time.temporal.ChronoUnit
 
 @Configuration
 class Config(
-    private val configProperties: ConfigProperties
+    private val configProperties: ConfigProperties,
 ) {
 
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
         val redisClusterConfiguration = RedisClusterConfiguration(configProperties.redisProperties().nodes)
         redisClusterConfiguration.setMaxRedirects(configProperties.redisProperties().maxRedirects)
-        redisClusterConfiguration.setPassword(configProperties.redisProperties().password)
         val clusterTopologyRefreshOptions: ClusterTopologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
             .enableAllAdaptiveRefreshTriggers()
             .enablePeriodicRefresh(Duration.ofHours(1L))
@@ -37,7 +37,6 @@ class Config(
             .topologyRefreshOptions(clusterTopologyRefreshOptions)
             .build()
 
-        //todo hostAndPort.getPort()가 6379로 나와서 연결 X
         val resolver = MappingSocketAddressResolver.create(
             DnsResolvers.UNRESOLVED
         ) { hostAndPort: HostAndPort ->
