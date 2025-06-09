@@ -14,7 +14,7 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' red
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-master-2
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-master-3
 
-# 클러스터 생성
+# 클러스터 생성 [ip는 수정]
 winpty docker exec -it redis-master-1 redis-cli --cluster create \
 172.18.0.8:9001 \
 172.18.0.6:9002 \
